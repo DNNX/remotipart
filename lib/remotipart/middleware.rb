@@ -9,7 +9,7 @@ module Remotipart
 
     def call env
       # Get request params
-      params = Rack::Request.new(env).params
+      params = extract_params(env)
 
       if params
         # This was using an iframe transport, and is therefore an XHR
@@ -25,6 +25,12 @@ module Remotipart
       end
 
       @app.call(env)
+    end
+
+    private
+
+    def extract_params(env)
+      Rack::Request.new(env).params
     end
   end
 end
