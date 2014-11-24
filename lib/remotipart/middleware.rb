@@ -31,6 +31,10 @@ module Remotipart
 
     def extract_params(env)
       Rack::Request.new(env).params
+    # ArgumentError is raised when env contains an URL with invalid %-encoding.
+    # Let's just ignore the request in this case.
+    rescue ArgumentError
+      nil
     end
   end
 end
